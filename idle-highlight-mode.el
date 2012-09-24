@@ -85,11 +85,12 @@
   (if idle-highlight-mode
       (let* ((target-symbol (symbol-at-point))
              (target (symbol-name target-symbol)))
-        (idle-highlight-unhighlight)
+        ;; (idle-highlight-unhighlight)
         (when (and target-symbol
                    (not (in-string-p))
                    (looking-at-p "\\s_\\|\\sw") ;; Symbol characters
                    (not (member target idle-highlight-exceptions)))
+          (idle-highlight-unhighlight)  ;; unhighlight here, if the cursor moves, do not change the highlight state
           (setq idle-highlight-regexp (concat "\\<" (regexp-quote target) "\\>"))
           (highlight-regexp idle-highlight-regexp 'idle-highlight)))))
 
